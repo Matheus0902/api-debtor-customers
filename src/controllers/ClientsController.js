@@ -15,7 +15,6 @@ class ClientsController {
     const clientNameExists = await knex("clients").where('user_id', user_id).where('name', name).first()
 
     if(clientNameExists) {
-      console.log(clientNameExists)
       throw new AppError("Já existe um cliente cadastrado com este nome")
     }
 
@@ -58,11 +57,7 @@ class ClientsController {
 
     const user_id = request.user.id
 
-    console.log('nome?:', name)
-
     const clients = await knex('clients').where({user_id: user_id}).andWhere('name', 'like', `%${name}%`)
-
-    console.log(user_id, name , clients)
 
     return response.json(clients)
   }

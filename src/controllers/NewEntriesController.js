@@ -8,12 +8,10 @@ class NewEntriesController {
     const client = await knex("clients").where('name', client_name).first()
 
     if(!client) {
-      throw new AppError(`Cliente não encontrado`)
+      throw new AppError(`Cliente não encontrado, digite um nome válido`)
     }
 
     const client_id = client.id 
-
-    console.log(client_name, description, total_value)
 
     await knex("new_entries").insert({
       client_name: client_name, 
