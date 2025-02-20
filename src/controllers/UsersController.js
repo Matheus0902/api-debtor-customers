@@ -59,6 +59,34 @@ class UsersController {
      return response.status(200).json({ message: "Usuário atualizado com sucesso!"})
 
   }
+
+  async checkPassword(request, response) {
+   try {
+    const user_id = request.user.id
+
+    const { password } = request.body
+
+    const [user] = await knex('users').where('id', user_id)
+
+    if (!user) {
+      return response.status(404).json({ message: 'Usuário não encontrado.' });
+    }
+
+    if(password) {
+      const checkPassword = await compare(password, user.password)
+
+      if(!checkPassword) {
+        throw new AppError('A senha não confere')
+      }
+
+      return response.status(200).json({ message: 'Senha verificada com sucesso.' });
+    }
+
+   } catch(error) {
+     console.log(error)
+     return response.status(500).json({ message: 'Erro ao verificar senha.'})
+   }
+  }
 }
 
 module.exports = UsersController

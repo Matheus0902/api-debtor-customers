@@ -8,6 +8,7 @@ const usersRoutes = Router()
 const usersController = new UsersController()
 
 usersRoutes.post("/", usersController.create)
+usersRoutes.delete("/", ensureAuthenticated, usersController.checkPassword)
 usersRoutes.put("/", ensureAuthenticated, usersController.update)
 
 module.exports = usersRoutes
