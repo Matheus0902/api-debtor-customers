@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: path.resolve(__dirname, "src", "database", "database.db")
+      filename: process.env.DATABASE_PATH || path.resolve(__dirname, '..', 'src', 'database', 'database.db')
     },
     
     pool: {
