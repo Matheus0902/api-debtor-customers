@@ -1,9 +1,12 @@
 module.exports = {
   apps : [{
     script: './src/server.js',
-    watch: '.'
-  },
-    
+    watch: true,               // Habilita o 'watch' para reiniciar quando arquivos mudarem
+      env: {
+        NODE_ENV: 'production'   // Definindo a variável de ambiente 'NODE_ENV'
+      },
+      post_deploy: 'npm run migrate', // Roda as migrações após o deploy
+    },
   ],
 
   deploy : {
